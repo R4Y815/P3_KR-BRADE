@@ -4,11 +4,11 @@ import './main.scss'; /* for stylesheet */
 
 /* BELOW: Test examples for importing modules to front-end */
 import { mouse } from './mouse.js';
-import 'core-js/es/function';
 import { arrow } from './arrowFn.js';
+import 'core-js/es/function';
+
 
 console.log('This is from index.js');
-console.log('This is from cat.js', cat);
 console.log('This is from mouse.js', mouse);
 
 const obj = {
@@ -46,4 +46,5 @@ axios.get('/items')
     console.log(error);
   });
 
-  
+/* ============================================================================================================ */
+/* ============================================================================================================ */  
