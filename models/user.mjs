@@ -1,15 +1,17 @@
-export default function initItemModel(sequelize, DataTypes) {
-  return sequelize.define('item', {
+export default function userModel(sequelize, DataTypes) {
+  return sequelize.define('user', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    name: {
+    email: {
+      allowNull: false,
       type: DataTypes.STRING,
     },
-    description: {
+    password: {
+      allowNull: false,
       type: DataTypes.STRING,
     },
     createdAt: {

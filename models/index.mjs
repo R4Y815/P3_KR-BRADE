@@ -1,7 +1,8 @@
 import { Sequelize } from 'sequelize';
 import url from 'url';
 import allConfig from '../config/config.js';
-import initItemModel from './item.mjs';
+import userModel from './user.mjs';
+import gameModel from './game.mjs';
 
 const env = process.env.NODE_ENV || 'development';
 const config = allConfig[env];
@@ -33,7 +34,16 @@ else {
     config);
 }
 
-db.Item = initItemModel(sequelize, Sequelize.DataTypes);
+
+// add your model definitions to db here
+db.Game = gameModel(sequelize, Sequelize.DataTypes);
+db.User = userModel(sequelize, Sequelize.DataTypes);
+
+/* Define many to many relationship here */
+db.Game.belongsToMany(db.User, { through: 'gameusers' });
+db.User.belongsToMany(db.Game, { through: 'gameusers' });
+
+
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
