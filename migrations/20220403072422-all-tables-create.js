@@ -102,7 +102,7 @@ module.exports = {
       },
       type: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       b_atk: {
         allowNull: false,

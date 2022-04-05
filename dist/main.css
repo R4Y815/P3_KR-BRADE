@@ -1,2 +1,14 @@
-body{background-color:green}.item{padding:10px;margin:10px;border:1px solid grey;width:28%;display:inline-block;word-wrap:break-word}
+/*!********************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/main.scss ***!
+  \********************************************************************************************************/
+body {
+  background-color: green; }
+
+.item {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid grey;
+  width: 28%;
+  display: inline-block;
+  word-wrap: break-word; }
 
