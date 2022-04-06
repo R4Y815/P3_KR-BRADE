@@ -6,6 +6,8 @@ import initUsersController from './controllers/users.mjs'
 export default function bindRoutes(app) {
   const GamesController = initGamesController(db);
   const UsersController = initUsersController(db);
+
+  
   /* createUser/Login Page */
 /*   app.get('/login', (request, response) => {
     response.render('login');
@@ -26,6 +28,7 @@ export default function bindRoutes(app) {
 } */
 
   //DATA routes
+
 
   //PAGE routes
   app.get('/facePage', (request, response) => {
@@ -50,6 +53,6 @@ export default function bindRoutes(app) {
   // get RiderImageData from the GameState based on Game ID
   app.post('/games/:id', GamesController.getRiderImage);
   
-  // update a game with new cards
-  app.put('/games/:id/deal', GamesController.modifyState);
+  // modify the gameState using Rider Actions
+  app.put('/games/:id/deal', GamesController.riderAction);
 }

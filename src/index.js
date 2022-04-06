@@ -145,9 +145,17 @@ const dispGameInfo = () => {
         riderStatsDisp.innerText = `\n <${currentGame.riderName}> \n HP: ${currentGame.riderHp} \n DEF: ${currentGame.riderDef}% \n ATK: ${currentGame.riderbAtk} `;
         statBody.appendChild(riderStatsDisp);
         document.body.appendChild(statBody);
-        
+
+        let rankDisp = currentGame.undeadRank;
+        if(currentGame.undeadRank === 11) {
+          rankDisp = 'JACK';
+        } else if (currentGame.undeadRank === 12){
+          rankDisp = 'QUEEN';
+        } else if (currentGame.undeadRank === 13){
+          rankDisp = 'KING';
+        } 
         const undeadStatsDisp = document.createElement('div');
-        undeadStatsDisp.innerText = `\n <${currentGame.undeadName} Undead> \n Category ${currentGame.undeadRank} \n HP: ${currentGame.undeadHp} \n DEF: ${currentGame.undeadDef}% \n ATK: ${currentGame.undeadbAtk} `;
+        undeadStatsDisp.innerText = `\n <${currentGame.undeadName} Undead> \n Category ${rankDisp} \n HP: ${currentGame.undeadHp} \n DEF: ${currentGame.undeadDef}% \n ATK: ${currentGame.undeadbAtk} `;
         statBody.appendChild(undeadStatsDisp);
         document.body.appendChild(statBody);
         
@@ -159,7 +167,28 @@ const dispGameInfo = () => {
   });
 };
 
+const riderAttack = () => {
+  const riderActionEl = document.createElement('div');
+  document.body.appendChild(riderActionEl);
+  const riderAtkEl = document.createElement('button');
+  riderAtkEl.setAttribute('type', 'button');
+  riderAtkEl.setAttribute('id', 'riderAtkEl');
+  riderAtkEl.innerText = 'Attack';
+  document.body.appendChild(riderAtkEl);
+
+  riderAtkEl.addEventListener('click', () => {
+    axios
+    .put(`/games/${currentGame.id}/deal`)
+    .then((response) => {
+    })
+    .catch((error) => {
+      // handle error
+      console.log(error);
+    });
+  });
+};
 
 
 
 dispGameInfo();
+riderAttack();

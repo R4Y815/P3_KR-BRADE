@@ -321,37 +321,35 @@ export default function initGamesController(db) {
     }
   };
 
-
-
-
-
-
-
   
 /* NEED TO PULL UP THE CORRECT GAME/TURN ID!! */
   // deal two new cards from the deck.
-  const modifyState = async (request, response) => {
+  const riderAction = async (request, response) => {
     try {
       // get the game by the ID passed in the request
       const game = await db.Game.findByPk(request.params.id);
 
-      // make changes to the object
-      const playerHand = [game.gameState.cardDeck.pop(), game.gameState.cardDeck.pop()];
+      console.log('riderData =', riderData);
+      console.log('undeadData B4 Atk =', undeadData);
 
+      riderAtk(riderData, undeadData);
+      undeadAtk(undeadData, riderData);
+      console.log('undeadData after being attacked =', undeadData);
+      // make changes to the object
       // update the game with the new info
-      await game.update({
+       await game.update({
         gameState: {
-          cardDeck: game.gameState.cardDeck,
-          playerHand,
-        },
+          riderData: riderData,
+          undeadData: undeadData,
+        }, 
 
       });
       // send the updated game back to the user.
       // dont include the deck so the user can't cheat
-      response.send({
-        id: game.id,
+ /*      response.send({
+        id: game.id, 
   
-      });
+      });*/
     } catch (error) {
       response.status(500).send(error);
     }
@@ -363,7 +361,7 @@ export default function initGamesController(db) {
   // return all functions we define in an object
   // refer to the routes file above to see this used
   return {
-    modifyState,
+    riderAction,
     create,
     index,
     selectRider,
@@ -374,5 +372,13 @@ export default function initGamesController(db) {
 }
 
 
+/* Based on user id return the game id and allow for loading of previous saved Game Id */
 
+
+/* Effects idea
+* 1) Place a status object for RiderImage
+* 2) Start an effect Timer Counter, if status object is blank, counter is inactive
+  3) counter takes value if undead applies relevant effect 
+  4) decrement counter on undead action side
+  5) As Long as counter is active, effect persists on riderAction side and or image */
 
