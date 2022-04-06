@@ -1,6 +1,9 @@
 import { Sequelize } from 'sequelize';
 import url from 'url';
 import allConfig from '../config/config.js';
+import undeadModel from './undead.mjs';
+import comboModel from './combo.mjs';
+import riderModel from './rider.mjs';
 import userModel from './user.mjs';
 import gameModel from './game.mjs';
 
@@ -36,8 +39,13 @@ else {
 
 
 // add your model definitions to db here
+db.Rider = riderModel(sequelize, Sequelize.DataTypes);
+db.Undead = undeadModel(sequelize, Sequelize.DataTypes);
+db.Combo = comboModel(sequelize, Sequelize.DataTypes);
 db.Game = gameModel(sequelize, Sequelize.DataTypes);
 db.User = userModel(sequelize, Sequelize.DataTypes);
+
+
 
 /* Define many to many relationship here */
 db.Game.belongsToMany(db.User, { through: 'gameusers' });

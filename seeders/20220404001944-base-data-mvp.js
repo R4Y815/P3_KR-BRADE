@@ -25,41 +25,45 @@ module.exports = {
     /*DEFINE RIDER DATA */
     const riderData = [
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 1,
         name: 'Blade',
         b_atk: 480,
         type: 'ground',
+        hp: 5000,
         def: 40,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
-        suite: 'hearts',
+        suit: 'hearts',
         rank: 1,
         name: 'Chalice',
         b_atk: 530,
         type: 'ground',
+        hp: 6000,
         def: 20,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
-        suite: 'diamonds',
+        suit: 'diamonds',
         rank: 1,
         name: 'Garren',
         b_atk: 450,
         type: 'ground',
+        hp: 3500,
         def: 30,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
-        suite: 'clubs',
+        suit: 'clubs',
         rank: 1,
         name: 'Leangle',
         b_atk: 490,
         type: 'ground',
+        hp: 7000,
         def: 50,
         created_at: new Date(),
         updated_at: new Date(),
@@ -76,7 +80,7 @@ module.exports = {
     /* DEFINE UNDEAD DATA */
     const undeadData = [
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 2,
         prefix: 'Slash',
         ud_name: 'Lizard',
@@ -93,7 +97,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 3,
         prefix: 'Beat',
         ud_name: 'Lion',
@@ -110,7 +114,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 4,
         prefix: 'Tackle',
         ud_name: 'Boar',
@@ -127,7 +131,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 5,
         prefix: 'Kick ',
         ud_name: 'Locust',
@@ -144,7 +148,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 6,
         prefix: 'Thunder',
         ud_name: 'Deer',
@@ -161,7 +165,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 7,
         prefix: 'Metal',
         ud_name: 'Trilobite',
@@ -178,7 +182,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 8,
         prefix: 'Magnet',
         ud_name: 'Buffalo',
@@ -195,7 +199,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 9,
         prefix: 'Mach',
         ud_name: 'Jaguar',
@@ -212,7 +216,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 10,
         prefix: 'Time',
         ud_name: 'Scarab',
@@ -229,7 +233,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 11,
         prefix: 'Fusion',
         ud_name: 'Eagle',
@@ -246,7 +250,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 12,
         prefix: 'Absorb',
         ud_name: 'Capricorn',
@@ -263,7 +267,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        suite: 'spades',
+        suit: 'spades',
         rank: 13,
         prefix: 'Evolution',
         ud_name: 'Caucasus',

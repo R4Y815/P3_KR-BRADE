@@ -6,7 +6,7 @@ export default function riderModel(sequelize, DataTypes) {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    suite: {
+    suit: {
       allowNull: false,
       type: DataTypes.STRING,
     },
@@ -21,6 +21,10 @@ export default function riderModel(sequelize, DataTypes) {
     type: {
       allowNull: false,
       type: DataTypes.STRING,
+    },
+    hp: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
     },
     bAtk: {
       allowNull: false,

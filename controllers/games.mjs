@@ -14,10 +14,18 @@ import { Op } from 'sequelize';
  */
 
 
+/* GLOBAL VARIABLES */
 
-let pokerCardDeck = null;
-let aceDeck = null;
+let mainDeck;
+let removedAce = [];
+let aceDeck = [];
+let riderData = null;
+let undeadData = null;
+let riderHand = [];
 
+/* to track whose turn it is */;
+
+/* Turn Combo - for STUN, BIND effects */
 
 // get a random index from an array given it's size
 const getRandomIndex = function (size) {
@@ -55,8 +63,9 @@ const makeDeck = function () {
   // create the empty deck at the beginning
   const deck = [];
 
-  const suits = ['hearts', 'diamonds', 'clubs', 'spades'];
-
+  const suits = ['spades'];
+ /*  , 'hearts', 'diamonds', 'clubs'
+ */
   let suitIndex = 0;
   while (suitIndex < suits.length) {
     // make a variable of the current suit
@@ -100,16 +109,31 @@ const makeDeck = function () {
 
 /* REMOVE ALL ACES: cardDeck */
 const removeAces = (cards) => { 
-  cards.forEach((card) =>{
-    /* is there a better way to do this? */
-    if (card.rank == 1) {
-      aceDeck.push(card);
+let ace;
+for (let i = 0; i < cards.length; i += 1) {
+  if(cards[i].rank === 1) {
+    ace = cards.splice(`${i}`,1)
+    aceDeck.push(ace[0]);
+  }
+}
+console.log('aceDeck b4 matching=', aceDeck);
+console.log('riderData.suit =', riderData.suit);
+
+  for(let j = 0; j < aceDeck.length; j += 1){
+    if(aceDeck[j].suit === riderData.suit) {
+      let aceKept = aceDeck.splice(`${j}`,1);
+      removedAce.push(aceKept[0]);
     }
-  });
+  }
+ console.log('final aceDeck =', aceDeck);
+ console.log('removed Ace =', removedAce);
+
 };
 
+
+
 /* RETURN ALL UN-SELECTED ACES TO CARDDECK */
-const return3Aces = (deck48) => {
+const returnAces = (deck48) => {
   if (aceDeck.length >= 2) {
     aceDeck.forEach((ace) => {
       deck48.push(ace);
@@ -119,6 +143,40 @@ const return3Aces = (deck48) => {
     return null;
   }
 } 
+
+
+
+
+/*
+ * ========================================================
+ * ========================================================
+ * ========================================================
+ * ========================================================
+ *
+ *                  Game Logic Functions
+ *
+ * ========================================================
+ * ========================================================
+ * ========================================================
+ */
+   /* RIDER ACTION FN GRP */
+
+   /* **** MINI-FN: Rider atk modifies Undead's image */
+   const riderAtk = (riderData, undeadData) => {
+    const finalDmgOut = riderData.bAtk * (undeadData.udDef / 100);
+    undeadData.hp -= Math.round(finalDmgOut);
+   };
+
+
+
+
+   /* UNDEAD AI ACTION GRP */
+
+  /* **** MINI-FN: Undead atk on the rider  */
+const undeadAtk = (undeadData, riderData) => {
+  const finalDmgOut = undeadData.udAtk * (riderData.def / 100);
+  riderData.hp -= Math.round(finalDmgOut);
+};
 
 
 /*
@@ -141,46 +199,138 @@ export default function initGamesController(db) {
     response.render('games/index'); /* used to be rendering from public/games/index */
   };
 
-  // create a new game. Insert a new row in the DB.
-  // also show 4 aces, covered to the user. 
+  /* LOAD Rider based on Ace card drawn */
+  const selectRider = async(request, response) => {
+    try {
+      const riderId = request.body.riderAceId;
+      console.log('BackEnd: RiderId =', riderId);
+
+      /* const riderDbQuery = await db.Rider.findByPk(riderId); */
+      const riderDbQuery  = await db.Rider.findAll({
+        where: {
+          id: riderId,
+        },
+      });
+      riderData = JSON.parse(JSON.stringify(riderDbQuery))[0];
+     /*  console.log('riderDbquery =', riderDbQuery); */
+      console.log('riderData =', riderData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
+  /* RELEASE Undead from cardDeck based on card drawn */
+  /* need to work with the unused cards */
+  const loadCombos = async(request, response) => {
+    try{
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  const loadUndead = async(request, response) => {
+    try {
+      /* Clear aceDecks for Use */
+      aceDeck = [];
+      removedAce = [];
+      /* generate unDead */
+
+      /* create clean deck, keeping the order */
+      mainDeck = shuffleCards(makeDeck());
+      console.log('MainDeck =', mainDeck);
+      
+      /* remove aces from deck after rider is picked */
+      removeAces(mainDeck);  
+      /* PokerCard to generate UNDEAD Monster */
+      const undeadCard = mainDeck.pop(); 
+     
+      /* GET MONSTER STATS */
+      const undeadDbQuery = await db.Undead.findAll({
+        where: {
+          [Op.and]: [{suit: undeadCard.suit}, {rank: undeadCard.rank}],
+        },
+      });
+      undeadData = JSON.parse(JSON.stringify(undeadDbQuery))[0];
+
+      console.log('undeadCard =', undeadCard);
+      console.log('undeadData =', undeadData);
+      console.log('no. of undeads locked in Cards =', mainDeck.length);
+     
+      /* SET UP MONSTER IMAGE FOR GAMESTATE INSTANCE */
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
+
+  // CREATE A NEW GAME. Insert a new row in the DB. 
   const create = async (request, response) => {
-
-  /* create clean deck, keeping the order */
-    const ordered52cards = makeDeck();
-  /* remove aces from ordered deck and separate the 2 decks*/
-    removeAces(ordered52cards);
-
-  /* Shuffle the remaining deck
-    * it will be used to generate undeads */
-   const cardDeck = shuffleCards(ordered52cards)
-
-   const cardOfMonster = cardDeck.pop();
-  
-  /* WE NOW HAVE MONSTER'S CARD GENERATED, WHAT ABOUT THE RIDER'S CARD? */
     const newGame = {
       gameState: {
-        cardDeck,
-        playerHand,
+        mainDeck,
+        riderData,
+        undeadData,
+        aceDeck,
+        removedAce,
+        riderHand,
       },
     };
 
     try {
       // run the DB INSERT query
-      const game = await db.Game.create(newGame);
+      const game = await db.Game.create(newGame); 
 
       // send the new game back to the user.
       // dont include the deck so the user can't cheat
       response.send({
         id: game.id,
-        playerHand: game.gameState.playerHand,
       });
     } catch (error) {
       response.status(500).send(error);
     }
   };
 
+  /* For FrontEnd to get RiderData Display */
+  const getRiderImage = async (request, response) => {
+    try {
+      /* get gameId of current gamestate pushed from front-end*/
+      const game = await db.Game.findByPk(request.params.id)
+      
+      /* and send back the gameState/image data found by id */
+      response.send({ 
+        id: request.params.id,
+        riderName: game.gameState.riderData.name, 
+        riderHp: game.gameState.riderData.hp, 
+        riderDef: game.gameState.riderData.def,
+        riderbAtk: game.gameState.riderData.bAtk,
+        undeadName: game.gameState.undeadData.udName,
+        undeadRank:game.gameState.undeadData.rank,
+        undeadHp: game.gameState.undeadData.hp,
+        undeadDef: game.gameState.undeadData.udDef,
+        undeadbAtk: game.gameState.undeadData.udAtk,
+      });
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  };
+
+
+
+
+
+
+
+  
+/* NEED TO PULL UP THE CORRECT GAME/TURN ID!! */
   // deal two new cards from the deck.
-  const deal = async (request, response) => {
+  const modifyState = async (request, response) => {
     try {
       // get the game by the ID passed in the request
       const game = await db.Game.findByPk(request.params.id);
@@ -196,23 +346,33 @@ export default function initGamesController(db) {
         },
 
       });
-
       // send the updated game back to the user.
       // dont include the deck so the user can't cheat
       response.send({
         id: game.id,
-        playerHand: game.gameState.playerHand,
+  
       });
     } catch (error) {
       response.status(500).send(error);
     }
   };
 
+  // GET Undead Data based on Card popped from Deck of 48
+
+
   // return all functions we define in an object
   // refer to the routes file above to see this used
   return {
-    deal,
+    modifyState,
     create,
     index,
+    selectRider,
+    loadUndead,
+    loadCombos,
+    getRiderImage,
   };
 }
+
+
+
+

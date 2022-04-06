@@ -6,7 +6,7 @@ export default function undeadModel(sequelize, DataTypes) {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    suite: {
+    suit: {
       allowNull: true,
       type: DataTypes.STRING,
     },

@@ -88,7 +88,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      suite: {
+      suit: {
         allowNull: false, 
         type: Sequelize.STRING,
       },
@@ -103,6 +103,10 @@ module.exports = {
       type: {
         allowNull: false,
         type: Sequelize.STRING,
+      },
+      hp: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       b_atk: {
         allowNull: false,
@@ -129,7 +133,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      suite:{
+      suit:{
         allowNull: true,
         type: Sequelize.STRING,
       },
@@ -181,7 +185,15 @@ module.exports = {
       s_mod: {
         allowNull: true, 
         type: Sequelize.STRING,
-      }
+      },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
     });
     
     await queryInterface.createTable('combos', {
@@ -218,6 +230,14 @@ module.exports = {
       s_eft: {
         allowNull: true, 
         type: Sequelize.STRING,
+      },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
       },
     });
   },
