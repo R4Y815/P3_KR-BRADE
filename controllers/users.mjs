@@ -16,7 +16,7 @@ export default function initUsersController(db) {
         console.log('Backend Auth = SUCCESS');
         response.cookie('loggedIn', true);
         response.cookie('userId', userDetails.id);
-        response.send('entrance');
+        response.send('facePage');
       } else {
         console.log('Backend Auth = FAILURE');
         response.send('boot');

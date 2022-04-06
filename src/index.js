@@ -127,7 +127,7 @@ const dispGameInfo = () => {
   const dispImageDataEl = document.createElement('button');
   dispImageDataEl.setAttribute('type', 'button');
   dispImageDataEl.setAttribute('id', 'dispImageDataEl');
-  dispImageDataEl.innerText = 'Display GameStateData';
+  dispImageDataEl.innerText = 'Show/Refresh GameData Display';
   document.body.appendChild(dispImageDataEl);
 
   dispImageDataEl.addEventListener('click', () => {
