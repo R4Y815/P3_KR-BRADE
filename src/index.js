@@ -138,33 +138,33 @@ const dispGameInfo = () => {
     .then((response) => {
       statBody.innerText = "";
       MsgCentreEl.innerText = "";
-      currentGame = response.data;
+      const showStats = response.data;
       console.log('response =', response);
       console.log('response.data =', response.data);
 
         /* create & append HTML elements for stat display */
 
         const riderStatsDisp = document.createElement('div');
-        riderStatsDisp.innerText = `\n <${currentGame.riderName}> \n HP: ${currentGame.riderHp} \n DEF: ${currentGame.riderDef}% \n ATK: ${currentGame.riderbAtk} `;
+        riderStatsDisp.innerText = `\n <${showStats.riderName}> \n HP: ${showStats.riderHp} \n DEF: ${showStats.riderDef}% \n ATK: ${showStats.riderbAtk} `;
         statBody.appendChild(riderStatsDisp);
         document.body.appendChild(statBody);
 
-        let rankDisp = currentGame.undeadRank;
-        if(currentGame.undeadRank === 11) {
+        let rankDisp = showStats.undeadRank;
+        if(showStats.undeadRank === 11) {
           rankDisp = 'JACK';
-        } else if (currentGame.undeadRank === 12){
+        } else if (showStats.undeadRank === 12){
           rankDisp = 'QUEEN';
-        } else if (currentGame.undeadRank === 13){
+        } else if (showStats.undeadRank === 13){
           rankDisp = 'KING';
         } 
         const undeadStatsDisp = document.createElement('div');
-        undeadStatsDisp.innerText = `\n <${currentGame.undeadName} Undead> \n Category ${rankDisp} \n HP: ${currentGame.undeadHp} \n DEF: ${currentGame.undeadDef}% \n ATK: ${currentGame.undeadbAtk} `;
+        undeadStatsDisp.innerText = `\n <${showStats.undeadName} Undead> \n Category ${rankDisp} \n HP: ${showStats.undeadHp} \n DEF: ${showStats.undeadDef}% \n ATK: ${showStats.undeadbAtk} `;
         statBody.appendChild(undeadStatsDisp);
         document.body.appendChild(statBody);
         document.body.appendChild(MsgCentreEl);
 
         /* Update Message Centre */
-        MsgCentreEl.innerText = `${currentGame.msg}`;
+        MsgCentreEl.innerText = `${showStats.msg}`;
         
     })
     .catch((error) => {

@@ -304,7 +304,7 @@ export default function initGamesController(db) {
   };
 
   /* For FrontEnd to get RiderData Display */
-  const getRiderImage = async (request, response) => {
+  const refreshStatsDisp = async (request, response) => {
     try {
       /* get gameId of current gamestate pushed from front-end*/
       const game = await db.Game.findByPk(request.params.id)
@@ -345,7 +345,7 @@ export default function initGamesController(db) {
       
       /* MESSAGE Center */
       if (undeadData.hp <= 0 && riderData.hp > 0) {
-          msg = `is defeated. It will now be sealed away in a Prime Vesta`;
+          msg = `${undeadData.udName}is defeated. It will now be sealed away in a Prime Vesta`;
         } else if (undeadData.hp > 0 && riderData.hp <= 0) {
           msg = `${undeadData.udName} has defeated you. Undoing Transformation`;
         } else {
@@ -357,9 +357,13 @@ export default function initGamesController(db) {
       // update the game with the new info
        await game.update({
         gameState: {
-          riderData: riderData,
-          undeadData: undeadData,
-          msg, 
+        mainDeck,
+        riderData: riderData,
+        undeadData: undeadData,
+        aceDeck,
+        removedAce,
+        riderHand,
+        msg,
         }, 
 
       });
@@ -386,7 +390,7 @@ export default function initGamesController(db) {
     selectRider,
     loadUndead,
     loadCombos,
-    getRiderImage,
+    refreshStatsDisp,
   };
 }
 
@@ -401,3 +405,12 @@ export default function initGamesController(db) {
   4) decrement counter on undead action side
   5) As Long as counter is active, effect persists on riderAction side and or image */
 
+
+/* TO DO:
+   1) Clear out descrepancy within the gameStates between createGame and update Gamestate
+       [SORTED BY USING DIFFERENT VARIABLE (FROM CURRENT GAME)TO HOLD DATA PASSED BACK TO FRONT END FOR DISPLAY ]
+   2) Create session /function such that after user logs it, it checks the dB on whether it has an associated GameState or not, 
+     - if has GameState: serve that game state
+     - if no GameState: Create game state
+  
+   3) Dump associated card images into the public folder and gen the sprite images based on that.    */

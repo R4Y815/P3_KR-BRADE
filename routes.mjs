@@ -53,7 +53,7 @@ export default function bindRoutes(app) {
   app.post('/games', GamesController.create);
 
   // get RiderImageData from the GameState based on Game ID
-  app.post('/games/:id', GamesController.getRiderImage);
+  app.post('/games/:id', GamesController.refreshStatsDisp);
   
   // modify the gameState using Rider Actions
   app.put('/games/:id/deal', GamesController.riderAction);
