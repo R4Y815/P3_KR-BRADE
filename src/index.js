@@ -119,6 +119,8 @@ instanceGen();
 /* GET RIDER & UNDEAD DATA FROM BACK-END */
 const statBody = document.createElement('div');
 
+/* Message Centre */
+const MsgCentreEl = document.createElement('div');
 
 
 const dispGameInfo = () => {
@@ -135,6 +137,7 @@ const dispGameInfo = () => {
     .post(`/games/${currentGame.id}`)
     .then((response) => {
       statBody.innerText = "";
+      MsgCentreEl.innerText = "";
       currentGame = response.data;
       console.log('response =', response);
       console.log('response.data =', response.data);
@@ -158,6 +161,10 @@ const dispGameInfo = () => {
         undeadStatsDisp.innerText = `\n <${currentGame.undeadName} Undead> \n Category ${rankDisp} \n HP: ${currentGame.undeadHp} \n DEF: ${currentGame.undeadDef}% \n ATK: ${currentGame.undeadbAtk} `;
         statBody.appendChild(undeadStatsDisp);
         document.body.appendChild(statBody);
+        document.body.appendChild(MsgCentreEl);
+
+        /* Update Message Centre */
+        MsgCentreEl.innerText = `${currentGame.msg}`;
         
     })
     .catch((error) => {
@@ -192,3 +199,5 @@ const riderAttack = () => {
 
 dispGameInfo();
 riderAttack();
+
+

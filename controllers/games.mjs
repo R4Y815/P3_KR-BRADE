@@ -22,6 +22,7 @@ let aceDeck = [];
 let riderData = null;
 let undeadData = null;
 let riderHand = [];
+let msg;
 
 /* to track whose turn it is */;
 
@@ -214,6 +215,7 @@ export default function initGamesController(db) {
       riderData = JSON.parse(JSON.stringify(riderDbQuery))[0];
      /*  console.log('riderDbquery =', riderDbQuery); */
       console.log('riderData =', riderData);
+      response.send();
     } catch (error) {
       console.log(error);
     }
@@ -259,7 +261,8 @@ export default function initGamesController(db) {
       console.log('undeadCard =', undeadCard);
       console.log('undeadData =', undeadData);
       console.log('no. of undeads locked in Cards =', mainDeck.length);
-     
+
+      response.send();
       /* SET UP MONSTER IMAGE FOR GAMESTATE INSTANCE */
 
     } catch (error) {
@@ -267,11 +270,13 @@ export default function initGamesController(db) {
     }
   };
 
-
+  
 
 
   // CREATE A NEW GAME. Insert a new row in the DB. 
   const create = async (request, response) => {
+  
+    msg = 'Battle Start.';
     const newGame = {
       gameState: {
         mainDeck,
@@ -280,6 +285,7 @@ export default function initGamesController(db) {
         aceDeck,
         removedAce,
         riderHand,
+        msg,
       },
     };
 
@@ -315,6 +321,7 @@ export default function initGamesController(db) {
         undeadHp: game.gameState.undeadData.hp,
         undeadDef: game.gameState.undeadData.udDef,
         undeadbAtk: game.gameState.undeadData.udAtk,
+        msg,
       });
     } catch (error) {
       response.status(500).send(error);
@@ -332,8 +339,19 @@ export default function initGamesController(db) {
       console.log('riderData =', riderData);
       console.log('undeadData B4 Atk =', undeadData);
 
+      /* Fight action between Rider and Undead */  
       riderAtk(riderData, undeadData);
       undeadAtk(undeadData, riderData);
+      
+      /* MESSAGE Center */
+      if (undeadData.hp <= 0 && riderData.hp > 0) {
+          msg = `is defeated. It will now be sealed away in a Prime Vesta`;
+        } else if (undeadData.hp > 0 && riderData.hp <= 0) {
+          msg = `${undeadData.udName} has defeated you. Undoing Transformation`;
+        } else {
+          msg = 'Battle in Progress';
+        } 
+
       console.log('undeadData after being attacked =', undeadData);
       // make changes to the object
       // update the game with the new info
@@ -341,15 +359,16 @@ export default function initGamesController(db) {
         gameState: {
           riderData: riderData,
           undeadData: undeadData,
+          msg, 
         }, 
 
       });
       // send the updated game back to the user.
       // dont include the deck so the user can't cheat
- /*      response.send({
+      response.send({
         id: game.id, 
   
-      });*/
+      });
     } catch (error) {
       response.status(500).send(error);
     }
