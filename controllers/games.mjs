@@ -145,7 +145,12 @@ const returnAces = (deck48) => {
   }
 } 
 
-
+/* MINI- FN: SORT CARDS IN HAND AND REARRANGE THEM */
+const sortRank = (hand) => { /* remb hand is an array */
+  /* rearrange them from highest to lowest (b - a) */
+  hand.sort((a, b) => parseFloat(b.rank) - parseFloat(a.rank));
+  return hand;
+};
 
 
 /*
@@ -243,7 +248,10 @@ export default function initGamesController(db) {
       /* generate unDead */
 
       /* create clean deck, keeping the order */
-      mainDeck = shuffleCards(makeDeck());
+      mainDeck = makeDeck();
+
+      /* Sort Cards to release enemies from weakest first to stronger later */
+      sortRank(mainDeck);
       console.log('MainDeck =', mainDeck);
       
       /* remove aces from deck after rider is picked */
@@ -291,13 +299,13 @@ export default function initGamesController(db) {
       console.log('savedGameQuery =', savedGameQuery);
       
       const savedGame = JSON.parse(JSON.stringify(savedGameQuery));
-      console.log('games.mjs savedGame =', savedGame);
+/*       console.log('games.mjs savedGame =', savedGame);
       console.log('savedGame.length =', savedGame.length);
       console.log('savedGame[0].id =', savedGame[0].id);
-
+ */
       /* if there query turns up empty array, means user is new player, need to create new game */
 
-      if ( savedGame.length !== 0) {
+      if ( savedGameQuery.length > 0) {
         mainDeck = savedGame[0].gameState.mainDeck;
         riderData = savedGame[0].gameState.riderData;
         undeadData = savedGame[0].gameState.undeadData;
@@ -306,7 +314,7 @@ export default function initGamesController(db) {
         riderHand = savedGame[0].gameState.riderHand;
         msg = savedGame[0].gameState.msg;
         response.send({ id: savedGame[0].id, });
-      } else {
+      } else if (savedGameQuery.length === 0){
         /* Prepare completely new Game entry for games table */
         msg = 'Battle Start.';
         const newGame = {
@@ -328,9 +336,6 @@ export default function initGamesController(db) {
         response.send({
           id: game.id,
         });
-
-
-
       }
     } catch (error) {
       response.status(500).send(error);
