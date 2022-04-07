@@ -90,7 +90,7 @@ const instanceGen = () => {
   const instanceGenButtonEl = document.createElement('button');
   instanceGenButtonEl.setAttribute('type', 'button');
   instanceGenButtonEl.setAttribute('id', 'instanceGenButtonEl');
-  instanceGenButtonEl.innerText = 'Gen FightInstance';
+  instanceGenButtonEl.innerText = 'Dive into Battle';
   document.body.appendChild(instanceGenButtonEl);
 
   instanceGenButtonEl.addEventListener('click', () =>{

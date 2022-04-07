@@ -6,6 +6,13 @@ export default function initGameModel(sequelize, DataTypes) {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
+    userId: {
+      type: DataTypes.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id',
+        },      
+    },
     gameState: {
       type: DataTypes.JSON,
     },

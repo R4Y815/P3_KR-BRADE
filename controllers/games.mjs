@@ -193,6 +193,7 @@ const undeadAtk = (undeadData, riderData) => {
  * ========================================================
  */
 
+let loginUserId;
 
 export default function initGamesController(db) {
   // Rendering main start create games page from public/games.
@@ -276,28 +277,61 @@ export default function initGamesController(db) {
   // CREATE A NEW GAME. Insert a new row in the DB. 
   const create = async (request, response) => {
   
-    msg = 'Battle Start.';
-    const newGame = {
-      gameState: {
-        mainDeck,
-        riderData,
-        undeadData,
-        aceDeck,
-        removedAce,
-        riderHand,
-        msg,
-      },
-    };
-
     try {
-      // run the DB INSERT query
-      const game = await db.Game.create(newGame); 
+    /* Pull user Id of logged in user */
+      loginUserId = request.cookies.userId;
+      console.log('loginUserId =', loginUserId);
 
-      // send the new game back to the user.
-      // dont include the deck so the user can't cheat
-      response.send({
-        id: game.id,
-      });
+      /* based on logged in userId, search Games table to find any saved Games */
+      const savedGameQuery = await db.Game.findAll({
+        where: {
+          user_id: loginUserId,  
+        },
+      }) 
+      console.log('savedGameQuery =', savedGameQuery);
+      
+      const savedGame = JSON.parse(JSON.stringify(savedGameQuery));
+      console.log('games.mjs savedGame =', savedGame);
+      console.log('savedGame.length =', savedGame.length);
+      console.log('savedGame[0].id =', savedGame[0].id);
+
+      /* if there query turns up empty array, means user is new player, need to create new game */
+
+      if ( savedGame.length !== 0) {
+        mainDeck = savedGame[0].gameState.mainDeck;
+        riderData = savedGame[0].gameState.riderData;
+        undeadData = savedGame[0].gameState.undeadData;
+        aceDeck = savedGame[0].gameState.aceDeck;
+        removedAce = savedGame[0].gameState.removedAce;
+        riderHand = savedGame[0].gameState.riderHand;
+        msg = savedGame[0].gameState.msg;
+        response.send({ id: savedGame[0].id, });
+      } else {
+        /* Prepare completely new Game entry for games table */
+        msg = 'Battle Start.';
+        const newGame = {
+          userId: loginUserId,
+          gameState: {
+            mainDeck,
+            riderData,
+            undeadData,
+            aceDeck,
+            removedAce,
+            riderHand,
+            msg,
+          },
+        };
+        // run the DB INSERT query
+       const game = await db.Game.create(newGame); 
+        // send the new game back to the user.
+        // dont include the deck so the user can't cheat
+        response.send({
+          id: game.id,
+        });
+
+
+
+      }
     } catch (error) {
       response.status(500).send(error);
     }
@@ -356,6 +390,7 @@ export default function initGamesController(db) {
       // make changes to the object
       // update the game with the new info
        await game.update({
+        userId: loginUserId,
         gameState: {
         mainDeck,
         riderData: riderData,

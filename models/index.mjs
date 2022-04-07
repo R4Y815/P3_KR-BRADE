@@ -48,9 +48,9 @@ db.User = userModel(sequelize, Sequelize.DataTypes);
 
 
 /* Define many to many relationship here */
-db.Game.belongsToMany(db.User, { through: 'gameusers' });
+/* db.Game.belongsToMany(db.User, { through: 'gameusers' });
 db.User.belongsToMany(db.Game, { through: 'gameusers' });
-
+ */
 
 
 db.sequelize = sequelize;

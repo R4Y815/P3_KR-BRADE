@@ -33,6 +33,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+      },
       game_state: {
         // JSON allows us to store non-relational data easily.
         // Non-relational data refers to data that we may not query across records.
@@ -50,7 +57,7 @@ module.exports = {
       },
     });
 
-    await queryInterface.createTable('gameusers', {
+/*     await queryInterface.createTable('gameusers', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -79,7 +86,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-    });
+    }); */
 
   await queryInterface.createTable('riders', {
       id: {
@@ -244,7 +251,8 @@ module.exports = {
 
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('gameusers');
+    await queryInterface.dropTable('users');
+/*     await queryInterface.dropTable('gameusers'); */
     await queryInterface.dropTable('games');
     await queryInterface.dropTable('items');
     await queryInterface.dropTable('riders');
