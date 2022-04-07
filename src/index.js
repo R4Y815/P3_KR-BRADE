@@ -12,8 +12,6 @@ import 'core-js/es/function';
 
 
 /* card deck Global Variables */
-
-
 let selectedAceId;
 let currentGame;
 
@@ -115,13 +113,11 @@ rouseUndead();
 instanceGen();
 
 
-/* NEED TO PULL UP THE CORRECT GAME/TURN ID!! */
 /* GET RIDER & UNDEAD DATA FROM BACK-END */
-const statBody = document.createElement('div');
-
 /* Message Centre */
 const MsgCentreEl = document.createElement('div');
-
+const MsgBar = document.getElementById('msgCtr')
+MsgBar.appendChild(MsgCentreEl);
 
 const dispGameInfo = () => {
   const riderHpEl = document.createElement('div');
@@ -136,19 +132,25 @@ const dispGameInfo = () => {
     axios
     .post(`/games/${currentGame.id}`)
     .then((response) => {
-      statBody.innerText = "";
+      const riderInfo = document.getElementById('riderInfo');
+      const undeadInfo = document.getElementById('undeadInfo');  
+      riderInfo.innerText = "";
+      undeadInfo.innerText = "";
       MsgCentreEl.innerText = "";
       const showStats = response.data;
       console.log('response =', response);
       console.log('response.data =', response.data);
 
-        /* create & append HTML elements for stat display */
-
+        /* create & append HTML elements for Rider Info Display */
         const riderStatsDisp = document.createElement('div');
-        riderStatsDisp.innerText = `\n <${showStats.riderName}> \n HP: ${showStats.riderHp} \n DEF: ${showStats.riderDef}% \n ATK: ${showStats.riderbAtk} `;
-        statBody.appendChild(riderStatsDisp);
-        document.body.appendChild(statBody);
+        riderStatsDisp.innerText = `\n HP: ${showStats.riderHp} \n DEF: ${showStats.riderDef}% \n ATK: ${showStats.riderbAtk} `;
+        
+        const riderLabel = document.getElementById('riderNameBar');
+        riderLabel.innerText = `${showStats.riderName}`;
 
+        riderInfo.appendChild(riderStatsDisp)
+        
+        /* create & append HTML elements for Undead Info Display */
         let rankDisp = showStats.undeadRank;
         if(showStats.undeadRank === 11) {
           rankDisp = 'JACK';
@@ -158,10 +160,11 @@ const dispGameInfo = () => {
           rankDisp = 'KING';
         } 
         const undeadStatsDisp = document.createElement('div');
-        undeadStatsDisp.innerText = `\n <${showStats.undeadName} Undead> \n Category ${rankDisp} \n HP: ${showStats.undeadHp} \n DEF: ${showStats.undeadDef}% \n ATK: ${showStats.undeadbAtk} `;
-        statBody.appendChild(undeadStatsDisp);
-        document.body.appendChild(statBody);
-        document.body.appendChild(MsgCentreEl);
+        undeadStatsDisp.innerText = `\n HP: ${showStats.undeadHp} \n DEF: ${showStats.undeadDef}% \n ATK: ${showStats.undeadbAtk}  \n\n\n Category ${rankDisp} `;
+        undeadInfo.appendChild(undeadStatsDisp);
+
+        const undeadLabel = document.getElementById('undeadNameBar');
+        undeadLabel.innerText = `${showStats.undeadName} Undead`;
 
         /* Update Message Centre */
         MsgCentreEl.innerText = `${showStats.msg}`;
@@ -181,7 +184,8 @@ const riderAttack = () => {
   riderAtkEl.setAttribute('type', 'button');
   riderAtkEl.setAttribute('id', 'riderAtkEl');
   riderAtkEl.innerText = 'Attack';
-  document.body.appendChild(riderAtkEl);
+  const riderButtonCont = document.getElementById('riderButtonGrp');
+  riderButtonCont.appendChild(riderAtkEl);
 
   riderAtkEl.addEventListener('click', () => {
     axios

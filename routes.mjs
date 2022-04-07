@@ -49,7 +49,7 @@ export default function bindRoutes(app) {
   app.get('/entrance', GamesController.index);
 
 
-  // create a new game
+  // create a fightInstance
   app.post('/games', GamesController.create);
 
   // get RiderImageData from the GameState based on Game ID

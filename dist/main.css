@@ -2,7 +2,7 @@
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/main.scss ***!
   \********************************************************************************************************/
 body {
-  background-color: green; }
+  background-color: #F8F8FF; }
 
 .item {
   padding: 10px;
@@ -11,4 +11,79 @@ body {
   width: 28%;
   display: inline-block;
   word-wrap: break-word; }
+
+/* Border outlines of major elements */
+#msgCtrBar {
+  height: 5vh;
+  border: 1px solid grey; }
+
+#msgCtr {
+  height: 5vh;
+  border: 1px solid grey; }
+
+#mainScreen {
+  height: 75vh;
+  border: 1px solid grey; }
+
+#actionPanel {
+  height: 55vh;
+  border: 1px solid blue;
+  padding: 0px; }
+
+#riderPanel {
+  height: 55vh;
+  border: 1px solid red;
+  margin: 0px; }
+
+#undeadPanel {
+  height: 55vh;
+  border: 1px solid red;
+  margin: 0px; }
+
+#spriteNameCont {
+  height: 5vh;
+  border: 1px solid grey;
+  padding: 0px; }
+
+#riderNameBar {
+  height: 5vh;
+  border: 1px solid red; }
+
+#undeadNameBar {
+  height: 5vh;
+  border: 1px solid red; }
+
+#riderCtrlPanelTop {
+  height: 35vh;
+  border: 1px solid green; }
+
+#riderInfo {
+  font-size: large;
+  font-weight: 500;
+  height: 35vh;
+  border: 1px solid green; }
+
+#riderCtrlPanelBtm {
+  height: 20vh;
+  border: 1px solid green; }
+
+#riderFrame {
+  height: 55vh;
+  border: 1px solid green; }
+
+#undeadFrame {
+  height: 55vh;
+  border: 1px solid green; }
+
+#undeadInfo {
+  font-size: large;
+  font-weight: 500;
+  height: 55vh;
+  border: 1px solid green; }
+
+#riderNameBar {
+  font-style: italic; }
+
+#undeadNameBar {
+  font-style: italic; }
 
