@@ -119,8 +119,9 @@ const MsgCentreEl = document.createElement('div');
 const MsgBar = document.getElementById('msgCtr')
 MsgBar.appendChild(MsgCentreEl);
 
-
+/* Create the Pic Holder Elements */
 const undeadPicHolder = document.getElementById('undeadJpgHolder');
+const riderPicHolder = document.getElementById('riderJpgHolder');
 
 
 /* REFRESH and Show Data, images */
@@ -153,9 +154,15 @@ const dispGameInfo = () => {
         
         const riderLabel = document.getElementById('riderNameBar');
         riderLabel.innerText = `${showStats.riderName}`;
-
         riderInfo.appendChild(riderStatsDisp)
-        
+
+        /* RIDER Portrait holder element */
+        const riderJpg = new Image();
+        riderJpg.src = `./riders/${showStats.riderName}.jpg`;
+        riderJpg.setAttribute('id', 'riderPhoto');
+        riderPicHolder.appendChild(riderJpg); 
+
+
         /* create & append HTML elements for Undead Info Display */
         let rankDisp = showStats.undeadRank;
         if(showStats.undeadRank === 11) {
@@ -177,6 +184,7 @@ const dispGameInfo = () => {
         undeadJpg.src = `./undeads/${showStats.undeadName}.jpg`;
         undeadJpg.setAttribute('id', 'undeadPhoto');
         undeadPicHolder.appendChild(undeadJpg); 
+
 
         /* Update Message Centre */
         MsgCentreEl.innerText = `${showStats.msg}`;
