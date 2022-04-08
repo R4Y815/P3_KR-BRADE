@@ -87,3 +87,7 @@ body {
 #undeadNameBar {
   font-style: italic; }
 
+#undeadPhoto {
+  height: 55vh;
+  width: auto; }
+

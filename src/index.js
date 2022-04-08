@@ -119,6 +119,11 @@ const MsgCentreEl = document.createElement('div');
 const MsgBar = document.getElementById('msgCtr')
 MsgBar.appendChild(MsgCentreEl);
 
+
+const undeadPicHolder = document.getElementById('undeadJpgHolder');
+
+
+/* REFRESH and Show Data, images */
 const dispGameInfo = () => {
   const riderHpEl = document.createElement('div');
   document.body.appendChild(riderHpEl);
@@ -136,6 +141,7 @@ const dispGameInfo = () => {
       const undeadInfo = document.getElementById('undeadInfo');  
       riderInfo.innerText = "";
       undeadInfo.innerText = "";
+/*       undeadPicHolder.innerText = ""; */
       MsgCentreEl.innerText = "";
       const showStats = response.data;
       console.log('response =', response);
@@ -165,6 +171,12 @@ const dispGameInfo = () => {
 
         const undeadLabel = document.getElementById('undeadNameBar');
         undeadLabel.innerText = `${showStats.undeadName} Undead`;
+
+        /* UNDEAD Portrait holder element */
+        const undeadJpg = new Image();
+        undeadJpg.src = `./undeads/${showStats.undeadName}.jpg`;
+        undeadJpg.setAttribute('id', 'undeadPhoto');
+        undeadPicHolder.appendChild(undeadJpg); 
 
         /* Update Message Centre */
         MsgCentreEl.innerText = `${showStats.msg}`;
