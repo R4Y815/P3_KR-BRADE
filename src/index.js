@@ -99,7 +99,7 @@ const instanceGen = () => {
   const instanceGenButtonEl = document.createElement('button');
   instanceGenButtonEl.setAttribute('type', 'button');
   instanceGenButtonEl.setAttribute('id', 'instanceGenButtonEl');
-  instanceGenButtonEl.innerText = 'Get Ready for Battle';
+  instanceGenButtonEl.innerText = 'Engage Fighting Position';
   document.body.appendChild(instanceGenButtonEl);
 
   instanceGenButtonEl.addEventListener('click', () =>{
@@ -135,6 +135,9 @@ const undeadPicHolder = document.getElementById('undeadJpgHolder');
 const riderPicHolder = document.getElementById('riderJpgHolder');
 
 
+/* Reposition Refresh Button */
+const riderButtonCont = document.getElementById('riderButtonGrp');
+
 /* REFRESH and Show Data, images */
 const dispGameInfo = () => {
   const riderHpEl = document.createElement('div');
@@ -142,8 +145,9 @@ const dispGameInfo = () => {
   const dispImageDataEl = document.createElement('button');
   dispImageDataEl.setAttribute('type', 'button');
   dispImageDataEl.setAttribute('id', 'dispImageDataEl');
-  dispImageDataEl.innerText = 'Show/Refresh GameData Display';
-  document.body.appendChild(dispImageDataEl);
+  dispImageDataEl.innerText = 'Refresh';
+  
+  riderButtonCont.appendChild(dispImageDataEl);
 
   dispImageDataEl.addEventListener('click', () => {
     axios
@@ -216,7 +220,7 @@ const riderAttack = () => {
   riderAtkEl.setAttribute('type', 'button');
   riderAtkEl.setAttribute('id', 'riderAtkEl');
   riderAtkEl.innerText = 'Attack';
-  const riderButtonCont = document.getElementById('riderButtonGrp');
+/*   const riderButtonCont = document.getElementById('riderButtonGrp'); */
   riderButtonCont.appendChild(riderAtkEl);
 
   riderAtkEl.addEventListener('click', () => {
