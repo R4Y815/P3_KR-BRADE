@@ -29,7 +29,17 @@ for (let i = 0; i < 4; i += 1) {
   const radioInputLabel = document.createElement('label');
   radioInputLabel.setAttribute('for', `aceCard${i + 1}`);
   radioInputLabel.setAttribute('id', `aceCardLabel${i + 1}`);
-  radioInputLabel.innerText = `Card ${i + 1} `;
+  const number = i + 1;
+  if( number === 1 ) {
+    radioInputLabel.innerHTML = "&nbsp; ♠ &nbsp;&nbsp;";
+  } else if (number === 2) {
+    radioInputLabel.innerHTML = "&nbsp; ♥ &nbsp;&nbsp;";
+  } else if (number === 3) {
+    radioInputLabel.innerHTML = "&nbsp; ♦ &nbsp;&nbsp;";
+  } else if (number === 4) {
+    radioInputLabel.innerHTML = "&nbsp; ♣ &nbsp;&nbsp;";
+  }
+  
   aceContainer.appendChild(radioInputLabel);
 }
 
@@ -65,10 +75,11 @@ aceSubmit.addEventListener('click', () => {
 
 /*  ROUSE UNDEAD WORKs BUTTON for Maintenance packed into function */
 const rouseUndead = () => {
+  /* Release Monster from Card Deck / Gen Monster */
   const rouseButtonEl = document.createElement('button');
   rouseButtonEl.setAttribute('type', 'button');
   rouseButtonEl.setAttribute('id', 'rouseButtonEl');
-  rouseButtonEl.innerText = 'Gen Monster';
+  rouseButtonEl.innerText = 'Get to Undead location';
   document.body.appendChild(rouseButtonEl);
 
   rouseButtonEl.addEventListener('click', () =>{
@@ -88,7 +99,7 @@ const instanceGen = () => {
   const instanceGenButtonEl = document.createElement('button');
   instanceGenButtonEl.setAttribute('type', 'button');
   instanceGenButtonEl.setAttribute('id', 'instanceGenButtonEl');
-  instanceGenButtonEl.innerText = 'Dive into Battle';
+  instanceGenButtonEl.innerText = 'Get Ready for Battle';
   document.body.appendChild(instanceGenButtonEl);
 
   instanceGenButtonEl.addEventListener('click', () =>{
@@ -142,7 +153,8 @@ const dispGameInfo = () => {
       const undeadInfo = document.getElementById('undeadInfo');  
       riderInfo.innerText = "";
       undeadInfo.innerText = "";
-/*       undeadPicHolder.innerText = ""; */
+      undeadPicHolder.innerText = "";
+      riderPicHolder.innerText = "";
       MsgCentreEl.innerText = "";
       const showStats = response.data;
       console.log('response =', response);
