@@ -4,54 +4,47 @@
 body {
   background-color: #F8F8FF; }
 
-.item {
-  padding: 10px;
-  margin: 10px;
-  border: 1px solid grey;
-  width: 28%;
-  display: inline-block;
-  word-wrap: break-word; }
-
 /* Border outlines of major elements */
 #msgCtrBar {
   height: 5vh;
-  border: 1px solid grey; }
+  /* border:1px solid grey; */ }
 
 #msgCtr {
   height: 5vh;
-  border: 1px solid grey; }
+  font-size: larger;
+  /* border:1px solid grey; */ }
 
 #mainScreen {
   height: 75vh;
-  border: 1px solid grey; }
+  /* border:1px solid grey; */ }
 
 #actionPanel {
   height: 55vh;
-  border: 1px solid blue;
+  /* border:1px solid blue; */
   padding: 0px; }
 
 #riderPanel {
   height: 55vh;
-  border: 1px solid red;
+  /*  border:1px solid red; */
   margin: 0px; }
 
 #undeadPanel {
   height: 55vh;
-  border: 1px solid red;
+  /*  border:1px solid red; */
   margin: 0px; }
 
 #spriteNameCont {
   height: 5vh;
-  border: 1px solid grey;
+  /*   border:1px solid grey; */
   padding: 0px; }
 
 #riderNameBar {
   height: 5vh;
-  border: 1px solid red; }
+  /*   border:1px solid red; */ }
 
 #undeadNameBar {
   height: 5vh;
-  border: 1px solid red; }
+  /*   border:1px solid red; */ }
 
 #riderCtrlPanelTop {
   height: 35vh;
