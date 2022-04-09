@@ -5,8 +5,8 @@
   "main": "planning.js",
   "scripts": {
     "build": "webpack --config webpack_conf/webpack.prod.js",
-    "debug": "nodemon --inspect index.mjs",
-    "start": "nodemon index.mjs",
+    "debug": "node --inspect index.mjs",
+    "start": "node index.mjs",
     "watch": "webpack --watch --config webpack_conf/webpack.dev.js"
   },
   "repository": {
