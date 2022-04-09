@@ -9,7 +9,7 @@ export default function bindRoutes(app) {
 
   
   /* createUser/Login Page */
-  app.get('/login', (request, response) => {
+  app.get('/', (request, response) => {
     response.render('login');
   });
   app.post('/createAcct', UsersController.createUser);
